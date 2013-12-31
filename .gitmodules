@@ -10,3 +10,9 @@
 [submodule "modules/puppi"]
 	path = modules/puppi
 	url = https://github.com/example42/puppi.git
+[submodule "modules/rvm"]
+	path = modules/rvm
+	url = https://github.com/example42/puppet-rvm.git
+[submodule "modules/ruby"]
+	path = modules/ruby
+	url = https://github.com/example42/puppet-ruby.git

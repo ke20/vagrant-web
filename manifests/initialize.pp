@@ -1,6 +1,7 @@
 
 Exec { path => [ "/bin/", "/sbin/" , "/usr/bin/", "/usr/sbin/" ] }
 
+
 exec { 'apt-get update':
     command => 'apt-get update',
 }
@@ -26,7 +27,7 @@ class { 'php': }
 php::module { ["curl", "gd", "imagick", "xdebug"]: }
 
 # Override the PHP configuration
-file {'/etc/php5/conf.d/errors.conf':
+file {'/etc/php5/conf.d/errors.ini':
   ensure => present,
   owner => root, group => root, mode => 444,
   content => "display_errors = On \n",
@@ -54,3 +55,26 @@ file { '/etc/apache2/conf.d/phpmyadmin.conf':
     notify  => Service["apache2"],
 }
 
+
+# ----------------
+# Git installation
+package { 'git': }
+
+
+# ----------------------------------
+# Ruby installation with gems
+class { 'ruby': }
+
+# Some useful web dev tools
+package { ['sass', 'compass']:
+    ensure => installed,
+    provider => 'gem',
+}
+
+
+# --------------------------------
+# Vim installation (can to be useful)
+package { 'vim':
+    ensure => latest,
+    require  => Exec['apt-get update'],
+}
