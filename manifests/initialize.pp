@@ -72,9 +72,24 @@ package { ['sass', 'compass']:
 }
 
 
-# --------------------------------
+# -----------------------------------
 # Vim installation (can to be useful)
 package { 'vim':
     ensure => latest,
     require  => Exec['apt-get update'],
+}
+
+
+# ----------------------------
+# Composer global installation
+if ! defined(Package['curl']) {
+    package { 'curl':
+      ensure => present,
+    }
+}
+
+exec { 'composer_install':
+    command => 'curl -sS https://getcomposer.org/installer | php && sudo mv composer.phar /usr/local/bin/composer',
+    path    => '/usr/bin:/usr/sbin',
+    require => Package['curl'],
 }
