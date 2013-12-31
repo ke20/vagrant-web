@@ -30,7 +30,7 @@ php::module { ["curl", "gd", "imagick", "xdebug"]: }
 file {'/etc/php5/conf.d/errors.ini':
   ensure => present,
   owner => root, group => root, mode => 444,
-  content => "display_errors = On \n",
+  content => "display_errors = On \nhtml_errors = On \n",
 }
 
 
