@@ -40,7 +40,6 @@ class { 'mysql':
     root_password => 'root'
 }
 
-
 # -----------------------------------------
 # phpmyadmin installation and configuration
 package { 'phpmyadmin':
@@ -91,5 +90,5 @@ if ! defined(Package['curl']) {
 exec { 'composer_install':
     command => 'curl -sS https://getcomposer.org/installer | php && sudo mv composer.phar /usr/local/bin/composer',
     path    => '/usr/bin:/usr/sbin',
-    require => Package['curl'],
+    require => Package['curl', 'php'],
 }
