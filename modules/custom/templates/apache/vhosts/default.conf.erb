@@ -1,8 +1,23 @@
 <VirtualHost <%= @ip_addr %>:<%= @port %>>
     
     ServerAdmin <%= @server_admin_email ||= 'webmaster@localhost' %>
-    
     DocumentRoot <%= @real_docroot %>
+    
+    <% if @serveraliases != "" -%>
+    <% if @serveraliases.is_a? Array -%>
+        ServerAlias <%= @serveraliases.flatten.join(" ") %>
+    <% else -%>
+        ServerAlias <%= @serveraliases %>
+    <% end -%>
+    <% end -%>
+
+    <% if @env_variables != "" -%>
+    <% if env_variables.is_a? Array -%>
+    <% env_variables.each do |envvars| -%>
+        SetEnv <%= envvars %>
+    <% end -%>
+    <% end -%>
+    <% end -%>
     
     <Directory />
         Options FollowSymLinks

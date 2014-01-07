@@ -21,7 +21,6 @@ apache::vhost { 'default':
     template => 'custom/apache/vhosts/default.conf.erb'
 }
 
-
 # ----------------------------------
 # PHP installation and configuration
 class { 'php': }
