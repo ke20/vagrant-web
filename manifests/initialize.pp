@@ -3,7 +3,7 @@ Exec { path => [ "/bin/", "/sbin/" , "/usr/bin/", "/usr/sbin/" ] }
 
 
 exec { 'apt-get update':
-    command => 'apt-get update',
+  command => 'apt-get update',
 }
 
 # -------------------------------------
@@ -13,10 +13,12 @@ class { "apache": }
 apache::module { 'rewrite': }
 
 apache::vhost { 'default':
-    docroot     => '/vagrant/projects',
-    server_name => false,
-    priority    => '',
-    template    => 'apache/virtualhost/vhost.conf.erb',
+    docroot  => '/vagrant/projects',
+    ip_addr  => '*',
+    priority => '',
+    directory_options => 'Indexes FollowSymLinks MultiViews',
+    directory_allow_override => 'None',
+    template => 'custom/apache/vhosts/default.conf.erb'
 }
 
 
@@ -28,9 +30,9 @@ php::module { ["curl", "gd", "imagick", "xdebug"]: }
 
 # Override the PHP configuration
 file {'/etc/php5/conf.d/errors.ini':
-  ensure => present,
-  owner => root, group => root, mode => 444,
-  content => "display_errors = On \nhtml_errors = On \n",
+    ensure  => present,
+    owner   => root, group => root, mode => 444,
+    content => "display_errors = On \nhtml_errors = On \n",
 }
 
 
@@ -44,7 +46,7 @@ class { 'mysql':
 # phpmyadmin installation and configuration
 package { 'phpmyadmin':
     ensure  => latest,
-    require  => Exec['apt-get update'],
+    require => Exec['apt-get update'],
 }
 
 file { '/etc/apache2/conf.d/phpmyadmin.conf':
@@ -66,16 +68,16 @@ class { 'ruby': }
 
 # Some useful web dev tools
 package { ['sass', 'compass']:
-    ensure => installed,
-    provider => 'gem',
+    ensure    => installed,
+    provider  => 'gem',
 }
 
 
 # -----------------------------------
 # Vim installation (can to be useful)
 package { 'vim':
-    ensure => latest,
-    require  => Exec['apt-get update'],
+    ensure  => latest,
+    require => Exec['apt-get update'],
 }
 
 
